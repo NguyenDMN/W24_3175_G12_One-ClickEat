@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">W24_3175_G12_One-ClickEat</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment_disccover">Hello blank fragment Discover</string>
+    <string name="hello_blank_fragment_favorite">Hello blank fragment Favorite</string>
+    <string name="hello_blank_fragment_cart">Hello blank fragment Cart</string>
+    <string name="hello_blank_fragment_user">Hello blank fragment User</string>
 </resources>

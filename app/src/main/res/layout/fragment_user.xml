@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/FragmentUser"
     android:layout_width="match_parent"
@@ -7,9 +8,29 @@
     tools:context=".Fragment.UserFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="100dp"
+        android:baselineAlignBottom="false"
+        app:srcCompat="@drawable/userinfo" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment_user" />
+        android:text="@string/hello_blank_fragment_user"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/txtUserEmail"
+        android:layout_width="357dp"
+        android:layout_height="51dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="400dp"
+        android:text="@string/ftxtEmail"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 </FrameLayout>

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.w24_3175_g12_one_clickeat.Fragment.UserFragment;
 import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
 import com.example.w24_3175_g12_one_clickeat.model.User;
 
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                 EditText password = findViewById(R.id.edPassword);
                 System.out.println("email"  +email);
                 final String[] resultemail = {""};
+                Bundle bundle = new Bundle();
                 // Toast.makeText(LoginActivity.this, email.getText().toString(), Toast.LENGTH_SHORT).show();
                 executorService.execute(new Runnable() {
                     @Override
@@ -47,14 +49,13 @@ public class LoginActivity extends AppCompatActivity {
                             resultemail[0] = ocdb.userDao().GetOneUser(email.getText().toString(), password.getText().toString()).getEmail();
                             Log.d("LOGIN ING", resultemail[0]);
                            if(resultemail[0] != null && resultemail[0].length() != 0){
-                    System.out.println("123");
-
-                    startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
-                } else {
-                    System.out.println(resultemail);
-                    Log.d("LOGIN ING", "JUMP");
-                    Toast.makeText(LoginActivity.this, "User not exist" + resultemail[0], Toast.LENGTH_SHORT).show();
-                }
+                            Intent intent = new Intent(LoginActivity.this, DiscoverActivity.class);
+                            intent.putExtra("email", resultemail[0]);
+                            startActivity(intent);
+                        } else {
+                            System.out.println(resultemail);
+                            Toast.makeText(LoginActivity.this, "User not exist" + resultemail[0], Toast.LENGTH_SHORT).show();
+                        }
                         }catch (Exception ex) {
                             Log.d("LOGIN ERROR", ex.getMessage());
                         }

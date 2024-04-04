@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,28 +35,33 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView email = findViewById(R.id.edEmail);
-                TextView password = findViewById(R.id.edPassword);
-                System.out.println(email);
+                EditText email = findViewById(R.id.edEmail);
+                EditText password = findViewById(R.id.edPassword);
+                System.out.println("email"  +email);
                 final String[] resultemail = {""};
+                // Toast.makeText(LoginActivity.this, email.getText().toString(), Toast.LENGTH_SHORT).show();
                 executorService.execute(new Runnable() {
                     @Override
                     public void run() {
                         try{
                             resultemail[0] = ocdb.userDao().GetOneUser(email.getText().toString(), password.getText().toString()).getEmail();
+                            Log.d("LOGIN ING", resultemail[0]);
+                           if(resultemail[0] != null && resultemail[0].length() != 0){
+                    System.out.println("123");
+
+                    startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
+                } else {
+                    System.out.println(resultemail);
+                    Log.d("LOGIN ING", "JUMP");
+                    Toast.makeText(LoginActivity.this, "User not exist" + resultemail[0], Toast.LENGTH_SHORT).show();
+                }
                         }catch (Exception ex) {
                             Log.d("LOGIN ERROR", ex.getMessage());
                         }
                     }
 
                 });
-                if(resultemail[0].length()!=0){
-                    System.out.println("123");
-                    startActivity(new Intent(LoginActivity.this, DiscoverActivity.class));
-                } else {
-                    System.out.println(resultemail);
-                    Toast.makeText(LoginActivity.this, "User not exist", Toast.LENGTH_SHORT).show();
-                }
+
 
             }
         });

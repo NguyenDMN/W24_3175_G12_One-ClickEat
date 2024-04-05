@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
+import com.example.w24_3175_g12_one_clickeat.model.Item;
 import com.example.w24_3175_g12_one_clickeat.model.Shop;
 import com.example.w24_3175_g12_one_clickeat.model.User;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 //hi
     List<User> users = new ArrayList<>();
     List<Shop> shopList = new ArrayList<>();
+    List<Item> itemList = new ArrayList<>();
     OneClickEatDatabase ocdb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,32 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 ocdb.userDao().insertUsersFromList(users);
                 ocdb.shopDao().deleteAllShops();
+                ocdb.itemDao().deleteAllItems();
                 ocdb.shopDao().insertShopsFromList(shopList);
+                Shop jolibee = ocdb.shopDao().getOneShopByName("jolibee");
+                Shop mc = ocdb.shopDao().getOneShopByName("mcdonald");
+                Shop wendy = ocdb.shopDao().getOneShopByName("Wendys");
+                Shop subway = ocdb.shopDao().getOneShopByName("Subway");
+                Shop poke = ocdb.shopDao().getOneShopByName("Poke");
+                Log.d("GETJOLI", String.valueOf(jolibee.getId()));
+                itemList.add(new Item("setA", "burger", 15.88,jolibee.getId(), R.drawable.jolibee1 ));
+                itemList.add(new Item("setB", "burger and coke", 20.99, jolibee.getId(), R.drawable.jolibee2));
+                itemList.add(new Item("setC", "noodles and coke", 10.99, jolibee.getId(), R.drawable.jolibee3));
+                itemList.add(new Item("mcA", "burger", 7.88,mc.getId(), R.drawable.mc1 ));
+                itemList.add(new Item("mcB", "burger double meat", 6.99, mc.getId(), R.drawable.mc2));
+                itemList.add(new Item("mcC", "fries", 2.99, mc.getId(), R.drawable.mc3));
+                itemList.add(new Item("wendyA", "A", 7.88,wendy.getId(), R.drawable.wendy1 ));
+                itemList.add(new Item("wendyB", "B", 6.99, wendy.getId(), R.drawable.wendy2));
+                itemList.add(new Item("wendyC", "C", 2.99, wendy.getId(), R.drawable.wendy3));
+                itemList.add(new Item("subwayA", "A", 7.88,subway.getId(), R.drawable.subway1 ));
+                itemList.add(new Item("subwayB", "B", 6.99, subway.getId(), R.drawable.subway2));
+                itemList.add(new Item("subwayC", "C", 2.99, subway.getId(), R.drawable.subway3));
+                itemList.add(new Item("pokeA", "A", 7.88,poke.getId(), R.drawable.poke1 ));
+                itemList.add(new Item("pokeB", "B", 6.99, poke.getId(), R.drawable.poke2));
+                itemList.add(new Item("pokeC", "C", 2.99, poke.getId(), R.drawable.poke3));
+
+                ocdb.itemDao().insertItemsFromList(itemList);
+
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -67,13 +94,16 @@ public class MainActivity extends AppCompatActivity {
     public void insertShops() {
         Log.d("INSERTSHOPS" , "insert shops");
         shopList = new ArrayList<>();
-        shopList.add(new Shop("jolibee", "jolibee shop", 4.3, "30min", R.drawable.jolibee));
+        Shop jolibee = new Shop("jolibee", "jolibee shop", 4.3, "30min", R.drawable.jolibee);
+
+        shopList.add(jolibee);
         shopList.add(new Shop("mcdonald", "mcdonald shop", 4.5, "10min", R.drawable.mcdonald));
         shopList.add(new Shop("Subway", "Subway shop", 3.8, "20min", R.drawable.subway));
-        shopList.add(new Shop("Wendys'", "Wendys shop", 4.3, "50min", R.drawable.wendys));
+        shopList.add(new Shop("Wendys", "Wendys shop", 4.3, "50min", R.drawable.wendys));
         shopList.add(new Shop("Poke", "poke shop", 4, "40min", R.drawable.poke));
 
     }
+
 
     public void ReadUserCSV() {
         users = new ArrayList<>();

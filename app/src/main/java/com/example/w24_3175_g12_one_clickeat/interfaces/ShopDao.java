@@ -26,7 +26,11 @@ public interface ShopDao {
     void deleteAllShops();
 
     @Query("SELECT * FROM shops where id = :id")
-    Shop getOneShopById(String id);
+    Shop getOneShopById(long id);
+
+    @Query("SELECT * FROM shops where name = :name")
+    Shop getOneShopByName(String name);
+
 
 
 }

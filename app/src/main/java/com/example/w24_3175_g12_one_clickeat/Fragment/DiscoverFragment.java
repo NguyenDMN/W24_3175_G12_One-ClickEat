@@ -1,16 +1,24 @@
 package com.example.w24_3175_g12_one_clickeat.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.room.Insert;
 import androidx.room.Room;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.w24_3175_g12_one_clickeat.FoodItemAdapter;
 import com.example.w24_3175_g12_one_clickeat.R;
 import com.example.w24_3175_g12_one_clickeat.ShopAdapter;
 import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
+import com.example.w24_3175_g12_one_clickeat.model.Item;
 import com.example.w24_3175_g12_one_clickeat.model.Shop;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +29,11 @@ public class DiscoverFragment extends Fragment {
 
     OneClickEatDatabase ocdb;
     ShopAdapter shopAdapter;
+
+    FoodItemAdapter foodItemAdapter;
     ListView listView;
+
+    ListView foodItemView;
     List<Shop> shopList = new ArrayList<>();
 
     private static final String ARG_PARAM1 = "param1";
@@ -33,6 +45,13 @@ public class DiscoverFragment extends Fragment {
     public DiscoverFragment() {
         // Required empty public constructor
     }
+
+    public List<Item> getItemList(long id) {
+
+        return ocdb.itemDao().getItemsByShopId(id);
+
+    }
+
 
     public static DiscoverFragment newInstance(String param1, String param2) {
         DiscoverFragment fragment = new DiscoverFragment();
@@ -83,11 +102,37 @@ public class DiscoverFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i == -1) {
+                if (i == -1) {
                     return;
+                } else {
+                    long shopId = shopList.get(i).getId();
+                    Log.d("SHOPID", String.valueOf(shopId));
+                    ocdb = Room.databaseBuilder(getContext(), OneClickEatDatabase.class, "oneclickeat.db").build();
+                    ExecutorService executorService = Executors.newSingleThreadExecutor();
+                    executorService.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            List<Item> itemList = ocdb.itemDao().getItemsByShopId(shopId);
+                            foodItemView = getView().findViewById(R.id.food_item_listview);
+
+                            // Ensure foodItemAdapter is initialized and populated with data
+                            if (foodItemAdapter == null) {
+                                foodItemAdapter = new FoodItemAdapter(itemList);
+                                foodItemView.setAdapter(foodItemAdapter);
+                            } else {
+                                foodItemAdapter.updateData(itemList);
+                            }
+
+                        }
+                    });
+
                 }
-                Toast.makeText(getActivity(), shopList.get(i).getName(), Toast.LENGTH_SHORT).show();
+
+
+                // Find foodItemView from the parent view
+
             }
         });
     }
 }
+

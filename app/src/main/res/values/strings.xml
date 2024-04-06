@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">W24_3175_G12_One-ClickEat</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment_disccover">Hello blank fragment Discover</string>
+    <string name="hello_blank_fragment_disccover">Discover the Shop!</string>
     <string name="hello_blank_fragment_favorite">Hello blank fragment Favorite</string>
-    <string name="hello_blank_fragment_cart">Hello blank fragment Cart</string>
+    <string name="hello_blank_fragment_cart">Cart</string>
     <string name="hello_blank_fragment_user">Hello blank fragment User</string>
     <string name="txWelcome">Welcome to One Click Eat</string>
     <string name="btLogin">Login</string>
@@ -26,4 +26,23 @@
     <string name="Register">Register</string>
     <string name="RegisterEmailHint">Email</string>
     <string name="RegisterPwd">Password</string>
+    <string name="ftxtEmail">"User Email: "</string>
+    <string name="lastName">Last Name</string>
+    <string name="hintFirstName">First Name</string>
+    <string name="ShopName">Shop Name</string>
+    <string name="txtViewRestaurantName">Restaurant Name</string>
+    <string name="txtViewItemName">Item Name</string>
+    <string name="txtViewItemTotal">Item Total</string>
+    <string name="txtViewItemPriceSample">$8.49</string>
+    <string name="txtViewItemRemove">Remove</string>
+    <string name="txtQuantityText">Quantity:</string>
+    <string name="quantityDisplay">1</string>
+    <string name="txtViewCartTotal">Total Price:</string>
+    <string name="txtViewFinalPrice">$ 0.00</string>
+    <string name="btnCheckOutValue">Make Order</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txtViewGonnaPay">Going to pay: $0.00</string>
+
+
 </resources>

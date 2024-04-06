@@ -1,0 +1,11 @@
+id,name,description,category,rating,delivery_time,image_url,latitude,longitude
+1,Tasty Burger Joint,Delicious burgers and fries,Burgers,4.5,"30-45 minutes",https://example.com/tasty_burger.jpg,37.7749,-122.4194
+2,Pizza Paradise,Authentic Italian pizzas,Pizza,4.8,"20-35 minutes",https://example.com/pizza_paradise.jpg,37.7749,-122.4194
+3,Sushi Sensation,Fresh sushi rolls and sashimi,Sushi,4.3,"40-55 minutes",https://example.com/sushi_sensation.jpg,37.7749,-122.4194
+4,Café Creations,Coffee, pastries, and brunch items,Café,4.7,"25-40 minutes",https://example.com/cafe_creations.jpg,37.7749,-122.4194
+5,Taco Time,Authentic Mexican tacos and burritos,Mexican,4.6,"35-50 minutes",https://example.com/taco_time.jpg,37.7749,-122.4194
+6,BBQ Barn,Smoked meats and barbecue specialties,Barbecue,4.4,"45-60 minutes",https://example.com/bbq_barn.jpg,37.7749,-122.4194
+7,Veggie Haven,Vegetarian and vegan dishes,Vegetarian,4.9,"20-35 minutes",https://example.com/veggie_haven.jpg,37.7749,-122.4194
+8,Dessert Delights,Sweet treats and desserts,Desserts,4.7,"25-40 minutes",https://example.com/dessert_delights.jpg,37.7749,-122.4194
+9,Healthy Haven,Nutritious bowls and salads,Healthy,4.5,"30-45 minutes",https://example.com/healthy_haven.jpg,37.7749,-122.4194
+10,Asian Fusion,Asian-inspired cuisine,Asian,4.6,"35-50 minutes",https://example.com/asian_fusion.jpg,37.7749,-122.4194

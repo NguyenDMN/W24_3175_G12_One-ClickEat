@@ -1,0 +1,55 @@
+<!-- shop_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <!-- Left part: Shop picture -->
+
+    <!-- Right part: Shop details -->
+    <ImageView
+        android:id="@+id/shop_picture"
+        android:layout_width="200dp"
+        android:layout_height="106dp"
+        android:src="@drawable/jolibee"
+        app:srcCompat="@drawable/jolibee" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:paddingStart="8dp">
+
+        <!-- Shop name -->
+        <TextView
+            android:id="@+id/shop_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shop Name"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Shop description -->
+        <TextView
+            android:id="@+id/shop_deliver_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="delivery time"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+
+        <!-- Shop ratings -->
+        <TextView
+            android:id="@+id/shop_ratings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Ratings: 4.5"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

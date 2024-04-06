@@ -13,15 +13,43 @@ public class User {
     @ColumnInfo(name="email")
     private String Email;
     @NonNull
+    @ColumnInfo(name="firstname")
+    private String firstName;
+    @NonNull
+    @ColumnInfo(name="lastname")
+    private String lastName;
+    @NonNull
     @ColumnInfo(name="password")
     private String Password;
 
     public User() {
 
     }
-    public User(@NonNull String email, @NonNull String password) {
+
+    public User(@NonNull String email, @NonNull String password, @NonNull String firstName, @NonNull String lastName) {
         Email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
         Password = password;
+    }
+
+
+    @NonNull
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(@NonNull String firstName) {
+        this.firstName = firstName;
+    }
+
+    @NonNull
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(@NonNull String lastName) {
+        this.lastName = lastName;
     }
 
     @NonNull

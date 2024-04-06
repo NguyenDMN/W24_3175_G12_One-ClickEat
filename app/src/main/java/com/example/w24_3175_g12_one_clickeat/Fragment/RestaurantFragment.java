@@ -11,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.w24_3175_g12_one_clickeat.adpater.FoodItemAdapter;
 import com.example.w24_3175_g12_one_clickeat.R;
 import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
+import com.example.w24_3175_g12_one_clickeat.model.FavShop;
 import com.example.w24_3175_g12_one_clickeat.model.Item;
 import com.example.w24_3175_g12_one_clickeat.model.Order;
 import com.example.w24_3175_g12_one_clickeat.model.Shop;
@@ -43,6 +45,10 @@ public class RestaurantFragment extends Fragment {
     String email;
     Shop shopInfor;
 
+    List<FavShop> favShopList;
+
+    ImageView imgHeartFav;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -62,6 +68,16 @@ public class RestaurantFragment extends Fragment {
             email = getArguments().getString("email", "NoEmail");
             shopId = getArguments().getLong("shopId", -1);
         }
+        ocdb = Room.databaseBuilder(getContext(), OneClickEatDatabase.class, "oneclickeat.db").build();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                favShopList = ocdb.favshopDao().getAllFavShops(email);
+            }
+        });
+
+
     }
 
     @Override
@@ -70,6 +86,17 @@ public class RestaurantFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_restaurant, container, false);
         txtViewResName = view.findViewById(R.id.txtViewResName);
         resView = view.findViewById(R.id.ResView);
+        imgHeartFav = view.findViewById(R.id.imgViewHeartFav);
+
+
+
+        if (favShopList != null && favShopList.contains(shopId)) {
+            imgHeartFav.setImageResource(R.drawable.heart_filled);
+            imgHeartFav.setTag(R.drawable.heart_filled);
+        } else {
+            imgHeartFav.setImageResource(R.drawable.heart_unfilled);
+            imgHeartFav.setTag(R.drawable.heart_unfilled);
+        }
         return view;
     }
 
@@ -94,6 +121,8 @@ public class RestaurantFragment extends Fragment {
                 });
             }
         });
+
+
         resView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -121,5 +150,49 @@ public class RestaurantFragment extends Fragment {
                 }
             }
         });
+
+
+
+
+
+        imgHeartFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the current drawable resource ID of the ImageView
+                int currentDrawable = (Integer) imgHeartFav.getTag();
+
+                // Check the current drawable and toggle it
+                if (currentDrawable == R.drawable.heart_unfilled) {
+                    imgHeartFav.setImageResource(R.drawable.heart_filled);
+                    // Update the tag to reflect the new drawable resource ID
+                    imgHeartFav.setTag(R.drawable.heart_filled);
+
+                    FavShop newFavShop = new FavShop(shopInfor.getId(),email,shopInfor.getName()
+                            ,shopInfor.getRating(),shopInfor.getDeliveryTime(), shopInfor.getImageResource());
+
+
+                    executorService.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            ocdb.favshopDao().insertFavShops(newFavShop);
+                        }
+                    });
+                } else {
+                    imgHeartFav.setImageResource(R.drawable.heart_unfilled);
+                    // Update the tag to reflect the new drawable resource ID
+                    imgHeartFav.setTag(R.drawable.heart_unfilled);
+                    Log.d("SHOPNAME", shopInfor.getName());
+
+                    executorService.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            ocdb.favshopDao().deleteOneFavShop(shopInfor.getId());
+                        }
+                    });
+                }
+            }
+        });
+
+
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragmentRestaurant"
     android:layout_width="match_parent"
@@ -7,20 +8,39 @@
     tools:context=".Fragment.RestaurantFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/txtViewResName"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:text="@string/txtViewRestaurantName"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/ResView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp" />
+        <TextView
+            android:id="@+id/txtViewResName"
+            android:layout_width="338dp"
+            android:layout_height="58dp"
+            android:gravity="center"
+            android:text="@string/txtViewRestaurantName"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/ResView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewResName" />
+
+        <ImageView
+            android:id="@+id/imgViewHeartFav"
+            android:layout_width="61dp"
+            android:layout_height="58dp"
+            android:contentDescription="@string/imgViewHeart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtViewResName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/heart_unfilled" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

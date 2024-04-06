@@ -3,14 +3,28 @@ package com.example.w24_3175_g12_one_clickeat.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.w24_3175_g12_one_clickeat.R;
+import com.example.w24_3175_g12_one_clickeat.adpater.CartItemAdapter;
+import com.example.w24_3175_g12_one_clickeat.adpater.HistoryAdapter;
+import com.example.w24_3175_g12_one_clickeat.adpater.ShopAdapter;
+import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
+import com.example.w24_3175_g12_one_clickeat.model.Order;
+import com.example.w24_3175_g12_one_clickeat.model.OrderHistory;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +44,13 @@ public class UserFragment extends Fragment {
     private String mParam2;
 
     private String email;
+    ListView orderListView;
 
+    HistoryAdapter historyAdapter;
+
+    List<OrderHistory> orderHistoryList = new ArrayList<>();
+
+    OneClickEatDatabase ocdb;
     public UserFragment() {
         // Required empty public constructor
     }
@@ -62,6 +82,7 @@ public class UserFragment extends Fragment {
             email = getArguments().getString("email");
         }
 
+
     }
 
     @Override
@@ -70,8 +91,39 @@ public class UserFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         TextView txtUserEmail = view.findViewById(R.id.txtUserEmail);
-
+        View headerView = inflater.inflate(R.layout.list_header_cart, null);
+        orderListView = view.findViewById(R.id.user_fragment_listView);
+        orderListView.addHeaderView(headerView);
         txtUserEmail.setText("User Email: " + email);
         return view;
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ocdb = Room.databaseBuilder(getContext(), OneClickEatDatabase.class, "oneclickeat.db").build();
+        // Perform database operations asynchronously using ExecutorService
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+
+        executorService.execute(new Runnable() {
+
+            @Override
+            public void run() {
+                orderHistoryList = ocdb.orderHistoryDao().getAllOrderHistoriesByEmail(email);
+                Log.d("LOGEMAIL",orderHistoryList.get(0).getEmail());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        historyAdapter = new HistoryAdapter(orderHistoryList);
+                        orderListView.setAdapter(historyAdapter);
+                    }
+                });
+
+
+            }
+        });
+
+
     }
 }

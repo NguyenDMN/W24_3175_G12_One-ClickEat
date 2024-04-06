@@ -16,9 +16,11 @@ import com.example.w24_3175_g12_one_clickeat.adpater.CartItemAdapter;
 import com.example.w24_3175_g12_one_clickeat.R;
 import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
 import com.example.w24_3175_g12_one_clickeat.model.Order;
+import com.example.w24_3175_g12_one_clickeat.model.OrderHistory;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -152,10 +154,21 @@ public class CartFragment extends Fragment {
 
                         bundle.putString("email",email);
                         bundle.putDouble("finalPrice", sum[0]);
+                        ExecutorService executorService = Executors.newSingleThreadExecutor();
+                        executorService.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Save the order history into the database
+                                OrderHistory orderHistory = new OrderHistory(email, new Date(), sum[0]);
+                                ocdb.orderHistoryDao().insertOrderHistory(orderHistory);
+
+                                // Clear the order list for the current user
+                                ocdb.orderDao().deleteOrderHistoryFromEmail(email);
+                            }
+                        });
 
                         CheckoutFragment checkoutFragment = new CheckoutFragment();
                         checkoutFragment.setArguments(bundle);
-
                         getParentFragmentManager().beginTransaction()
                                 .replace(R.id.relativelayout,checkoutFragment)
                                 .addToBackStack(null)

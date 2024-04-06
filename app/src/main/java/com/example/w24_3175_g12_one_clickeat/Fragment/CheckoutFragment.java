@@ -2,6 +2,8 @@ package com.example.w24_3175_g12_one_clickeat.Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.w24_3175_g12_one_clickeat.R;
+import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
 
 import java.text.DecimalFormat;
 
@@ -89,4 +92,6 @@ public class CheckoutFragment extends Fragment {
 
         return view;
     }
+
+
 }

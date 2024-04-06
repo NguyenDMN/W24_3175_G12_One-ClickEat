@@ -32,4 +32,7 @@ public interface OrderDao {
     @Query("UPDATE orders SET quantity = :newQuantity WHERE itemId = :itemId AND email = :userEmail")
     void updateOrder(long itemId, String userEmail, long newQuantity);
 
+    @Query("DELETE from orders where email = :email")
+    void deleteOrderHistoryFromEmail(String email);
+
 }

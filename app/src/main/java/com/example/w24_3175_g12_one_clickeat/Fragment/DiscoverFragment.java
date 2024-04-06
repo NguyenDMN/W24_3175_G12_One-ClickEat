@@ -3,6 +3,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
 import com.example.w24_3175_g12_one_clickeat.model.Item;
 import com.example.w24_3175_g12_one_clickeat.model.Shop;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -126,6 +128,7 @@ public class DiscoverFragment extends Fragment {
         });
 
 
+//        foodItemView = view.findViewById(R.id.food_item_listview);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

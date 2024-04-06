@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CartFragment#newInstance} factory method to
@@ -32,7 +33,6 @@ public class CartFragment extends Fragment {
     String email;
 
     OneClickEatDatabase ocdb;
-
     CartItemAdapter cartItemAdapter;
 
     ListView cartListView;

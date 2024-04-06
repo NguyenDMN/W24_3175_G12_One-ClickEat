@@ -16,7 +16,9 @@ import com.example.w24_3175_g12_one_clickeat.model.Order;
 import com.example.w24_3175_g12_one_clickeat.model.Shop;
 import com.example.w24_3175_g12_one_clickeat.model.User;
 
+
 @Database(entities = {User.class, Shop.class, Item.class, Order.class}, version = 11, exportSchema = false)
+
 public abstract class OneClickEatDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 

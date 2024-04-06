@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,6 +114,7 @@ public class RestaurantFragment extends Fragment {
                             } else {
                                 // If no order exists, insert a new order with quantity 1
                                 ocdb.orderDao().insertOrders(new Order(email, itemId, itemName,1,itemPrice));
+                                // ocdb.orderDao().insertOrders(new Order(email, itemId, 1));
                             }
                         }
                     });

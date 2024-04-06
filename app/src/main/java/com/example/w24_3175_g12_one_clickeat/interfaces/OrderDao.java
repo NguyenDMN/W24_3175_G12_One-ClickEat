@@ -1,5 +1,6 @@
 package com.example.w24_3175_g12_one_clickeat.interfaces;
 
+
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Dao
 public interface OrderDao {
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertOrders(Order... orders);
 
@@ -20,6 +22,7 @@ public interface OrderDao {
     @Query("SELECT * FROM orders")
     List<Order> getAllOrders();
 
+
     @Query("SELECT * FROM orders WHERE email= :userEmail ")
     List<Order> getAllOrdersByEmail(String userEmail);
 
@@ -28,4 +31,5 @@ public interface OrderDao {
 
     @Query("UPDATE orders SET quantity = :newQuantity WHERE itemId = :itemId AND email = :userEmail")
     void updateOrder(long itemId, String userEmail, long newQuantity);
+
 }

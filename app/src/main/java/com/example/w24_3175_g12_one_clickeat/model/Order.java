@@ -27,7 +27,6 @@ public class Order {
     private String itemName;
 
 
-
     @NonNull
     @ColumnInfo(name="quantity")
     private long quantity;
@@ -43,6 +42,11 @@ public class Order {
         this.itemName = itemName;
         this.price = price;
     }
+//    public Order(@NonNull String email, long itemId, long quantity) {
+//        this.email = email;
+//        this.itemId = itemId;
+//        this.quantity = quantity;
+//    }
 
     public long getId() {
         return id;
@@ -94,4 +98,5 @@ public class Order {
     public void setPrice(double price) {
         this.price = price;
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.w24_3175_g12_one_clickeat;
+package com.example.w24_3175_g12_one_clickeat.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -7,17 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.w24_3175_g12_one_clickeat.Fragment.UserFragment;
+import com.example.w24_3175_g12_one_clickeat.R;
 import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
-import com.example.w24_3175_g12_one_clickeat.model.User;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

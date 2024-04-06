@@ -1,15 +1,31 @@
 package com.example.w24_3175_g12_one_clickeat.Fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.example.w24_3175_g12_one_clickeat.R;
 
-public class FoodItemFragment extends Fragment {
+import java.text.DecimalFormat;
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link CheckoutFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class CheckoutFragment extends Fragment {
+
+    String email;
+
+    double finalPrice;
+
+    TextView txtViewFinalAmount;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -19,7 +35,7 @@ public class FoodItemFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FoodItemFragment() {
+    public CheckoutFragment() {
         // Required empty public constructor
     }
 
@@ -29,15 +45,14 @@ public class FoodItemFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FavoriteFragment.
+     * @return A new instance of fragment CheckoutFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FavoriteFragment newInstance(String param1, String param2) {
-        FavoriteFragment fragment = new FavoriteFragment();
+    public static CheckoutFragment newInstance(String param1, String param2) {
+        CheckoutFragment fragment = new CheckoutFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,15 +63,30 @@ public class FoodItemFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
+            email = getArguments().getString("email");
+            finalPrice =getArguments().getDouble("finalPrice");
+
         }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.food_item_layout, container, false);
+        View view = inflater.inflate(R.layout.fragment_checkout, container, false);
+
+        txtViewFinalAmount = view.findViewById(R.id.txtViewAmountPaying);
+
+        DecimalFormat df = new DecimalFormat("$#.##");
+        String finalTotalPriceFormat = df.format(finalPrice);
+
+        String outputDisplay = "Final Cost: " + finalTotalPriceFormat;
+
+        txtViewFinalAmount.setText(outputDisplay);
+
+
+
+        return view;
     }
 }

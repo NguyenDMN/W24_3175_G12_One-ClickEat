@@ -1,4 +1,4 @@
-package com.example.w24_3175_g12_one_clickeat;
+package com.example.w24_3175_g12_one_clickeat.adpater;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.w24_3175_g12_one_clickeat.R;
 import com.example.w24_3175_g12_one_clickeat.model.Shop;
 
 import java.util.List;

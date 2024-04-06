@@ -1,4 +1,4 @@
-package com.example.w24_3175_g12_one_clickeat;
+package com.example.w24_3175_g12_one_clickeat.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,8 @@ import com.example.w24_3175_g12_one_clickeat.Fragment.CartFragment;
 import com.example.w24_3175_g12_one_clickeat.Fragment.DiscoverFragment;
 import com.example.w24_3175_g12_one_clickeat.Fragment.FavoriteFragment;
 import com.example.w24_3175_g12_one_clickeat.Fragment.UserFragment;
+import com.example.w24_3175_g12_one_clickeat.R;
+import com.example.w24_3175_g12_one_clickeat.adpater.ShopAdapter;
 import com.example.w24_3175_g12_one_clickeat.model.Shop;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -23,6 +25,8 @@ public class DiscoverActivity extends AppCompatActivity implements NavigationBar
     BottomNavigationView bottomNavigationView;
     List<Shop> shopList = new ArrayList<>();
 
+    String userEmail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,11 @@ public class DiscoverActivity extends AppCompatActivity implements NavigationBar
 
         bottomNavigationView.setOnItemSelectedListener(this);
         ShopAdapter shopAdapter = new ShopAdapter(shopList);
-        loadFragment(new DiscoverFragment());
+
+
+        userEmail = getIntent().getStringExtra("email");
+
+        loadFragment(new DiscoverFragment(),userEmail);
 
 
 
@@ -45,22 +53,25 @@ public class DiscoverActivity extends AppCompatActivity implements NavigationBar
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
         Bundle bundle = new Bundle();
+        bundle.putString("email", userEmail);
+
         if (item.getItemId() == R.id.menu_Discover){
             fragment = new DiscoverFragment();
+
         } else if (item.getItemId() == R.id.menu_Cart) {
             fragment = new CartFragment();
+
         } else if (item.getItemId()== R.id.menu_Favorite) {
             fragment = new FavoriteFragment();
+
         } else if (item.getItemId() == R.id.menu_User) {
-            String userEmail = getIntent().getStringExtra("email");
             fragment = new UserFragment();
-            bundle.putString("email", userEmail);
-            fragment.setArguments(bundle);
+
 
         }
 
         if(fragment != null){
-            loadFragment(fragment);
+            loadFragment(fragment,userEmail);
         }
 
         return true;
@@ -71,12 +82,19 @@ public class DiscoverActivity extends AppCompatActivity implements NavigationBar
         super.onPointerCaptureChanged(hasCapture);
     }
 
-    void loadFragment(Fragment fragment) {
+    void loadFragment(Fragment fragment, String email) {
         // Begin the transaction
         getSupportFragmentManager().beginTransaction()
                 // Replace the contents of the container with the new fragment
                 .replace(R.id.relativelayout, fragment)
                 // Commit the transaction
                 .commit();
+
+        // Pass email to the fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        fragment.setArguments(bundle);
+
+
     }
 }

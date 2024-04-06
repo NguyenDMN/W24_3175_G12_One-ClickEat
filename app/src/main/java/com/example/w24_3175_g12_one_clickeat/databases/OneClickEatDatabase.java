@@ -8,13 +8,15 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.w24_3175_g12_one_clickeat.interfaces.ItemDao;
+import com.example.w24_3175_g12_one_clickeat.interfaces.OrderDao;
 import com.example.w24_3175_g12_one_clickeat.interfaces.ShopDao;
 import com.example.w24_3175_g12_one_clickeat.interfaces.UserDao;
 import com.example.w24_3175_g12_one_clickeat.model.Item;
+import com.example.w24_3175_g12_one_clickeat.model.Order;
 import com.example.w24_3175_g12_one_clickeat.model.Shop;
 import com.example.w24_3175_g12_one_clickeat.model.User;
 
-@Database(entities = {User.class, Shop.class, Item.class}, version = 6, exportSchema = false)
+@Database(entities = {User.class, Shop.class, Item.class, Order.class}, version = 11, exportSchema = false)
 public abstract class OneClickEatDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
@@ -22,6 +24,8 @@ public abstract class OneClickEatDatabase extends RoomDatabase {
 
     public abstract ItemDao itemDao();
     //public abstract User
+
+    public abstract OrderDao orderDao();
 
 
 }

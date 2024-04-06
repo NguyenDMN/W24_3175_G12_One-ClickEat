@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.w24_3175_g12_one_clickeat.R;
+import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +17,9 @@ import com.example.w24_3175_g12_one_clickeat.R;
  * create an instance of this fragment.
  */
 public class CartFragment extends Fragment {
+    String email;
+
+    OneClickEatDatabase ocdb;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,6 +58,7 @@ public class CartFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            email = getArguments().getString("email");
         }
     }
 

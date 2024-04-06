@@ -19,6 +19,7 @@ import com.example.w24_3175_g12_one_clickeat.R;
  * create an instance of this fragment.
  */
 public class FavoriteFragment extends Fragment {
+    String email;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,6 +59,7 @@ public class FavoriteFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            email = getArguments().getString("email");
         }
 
 

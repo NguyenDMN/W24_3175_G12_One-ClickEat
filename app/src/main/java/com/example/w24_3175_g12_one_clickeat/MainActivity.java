@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
 import com.example.w24_3175_g12_one_clickeat.model.Item;
+import com.example.w24_3175_g12_one_clickeat.model.Order;
 import com.example.w24_3175_g12_one_clickeat.model.Shop;
 import com.example.w24_3175_g12_one_clickeat.model.User;
 
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     List<User> users = new ArrayList<>();
     List<Shop> shopList = new ArrayList<>();
     List<Item> itemList = new ArrayList<>();
+
+    List<Order> orderList = new ArrayList<>();
     OneClickEatDatabase ocdb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
                 itemList.add(new Item("pokeC", "C", 2.99, poke.getId(), R.drawable.poke3));
 
                 ocdb.itemDao().insertItemsFromList(itemList);
+
+
+//                orderList.add(new Order("admin", 511,1 ));
+//                orderList.add(new Order("admin", 512,1 ));
+//                ocdb.orderDao().insertOrdersFromList(orderList);
 
             }
         });

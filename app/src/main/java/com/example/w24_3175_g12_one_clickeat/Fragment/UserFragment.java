@@ -110,7 +110,6 @@ public class UserFragment extends Fragment {
             @Override
             public void run() {
                 orderHistoryList = ocdb.orderHistoryDao().getAllOrderHistoriesByEmail(email);
-                Log.d("LOGEMAIL",orderHistoryList.get(0).getEmail());
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

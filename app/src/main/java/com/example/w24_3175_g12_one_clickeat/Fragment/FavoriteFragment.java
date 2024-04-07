@@ -15,9 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.w24_3175_g12_one_clickeat.R;
+import com.example.w24_3175_g12_one_clickeat.adpater.FavItemAdapter;
+import com.example.w24_3175_g12_one_clickeat.adpater.ShopAdapter;
 import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
+import com.example.w24_3175_g12_one_clickeat.model.FavShop;
+import com.example.w24_3175_g12_one_clickeat.model.Shop;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +33,9 @@ import java.util.List;
 public class FavoriteFragment extends Fragment {
     String email;
     OneClickEatDatabase ocdb;
+    List<FavShop> favList;
     ListView favListView;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,7 +78,15 @@ public class FavoriteFragment extends Fragment {
             email = getArguments().getString("email");
 
             ocdb= Room.databaseBuilder(getContext(),OneClickEatDatabase.class, "oneclickeat.db").build();
-            favListView=
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    favList = ocdb.favshopDao().getAllFavShops(email);
+
+                }
+            });
+
         }
 
 
@@ -82,6 +98,11 @@ public class FavoriteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_favorite, container, false);
+        favListView = view.findViewById(R.id.listViewFav);
+        favListView.setAdapter(new FavItemAdapter(favList));
+
+
         return inflater.inflate(R.layout.fragment_favorite, container, false);
 
     }

@@ -5,16 +5,20 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.w24_3175_g12_one_clickeat.activity.RegisterActivity;
 import com.example.w24_3175_g12_one_clickeat.adpater.CartItemAdapter;
 import com.example.w24_3175_g12_one_clickeat.R;
 import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
+import com.example.w24_3175_g12_one_clickeat.interfaces.OnItemRemovedListener;
 import com.example.w24_3175_g12_one_clickeat.model.Order;
 import com.example.w24_3175_g12_one_clickeat.model.OrderHistory;
 
@@ -31,7 +35,7 @@ import java.util.concurrent.Executors;
  * Use the {@link CartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements OnItemRemovedListener {
     String email;
 
     OneClickEatDatabase ocdb;
@@ -40,6 +44,7 @@ public class CartFragment extends Fragment {
     ListView cartListView;
 
     List<Order> orderList = new ArrayList<>();
+
 
     TextView finalTotalPrice;
 
@@ -54,6 +59,30 @@ public class CartFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private double tmpSum = 0;
+
+    @Override
+    public void onItemRemoved(List<Order> orderList) {
+        // Refresh your fragment's UI here
+        // For example, you can re-fetch the data and update the ListView
+        // update adpapter
+        final double[] sum = {0};
+        if(orderList!= null){
+            for(int i = 0; i<orderList.size();i++){
+                double pricePerUnit = orderList.get(i).getPrice();
+                long quantity = orderList.get(i).getQuantity();
+
+                double totalPrice = pricePerUnit *quantity;
+                sum[0] += totalPrice;
+            }
+        }
+        DecimalFormat df = new DecimalFormat("$#.##");
+        String finalTotalPriceFormat = df.format(sum[0]);
+        Log.d("TOTALPRICE", finalTotalPriceFormat);
+        finalTotalPrice.setText(finalTotalPriceFormat);
+
+    }
 
     public CartFragment() {
         // Required empty public constructor
@@ -102,7 +131,6 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
-
         cartListView = view.findViewById(R.id.cartView);
         finalTotalPrice = view.findViewById(R.id.txtViewFinalPrice);
         btnMakeOrder = view.findViewById(R.id.btnCheckOut);
@@ -116,7 +144,10 @@ public class CartFragment extends Fragment {
         ocdb = Room.databaseBuilder(getContext(), OneClickEatDatabase.class, "oneclickeat.db").build();
         // Perform database operations asynchronously using ExecutorService
         ExecutorService executorService = Executors.newSingleThreadExecutor();
+        cartItemAdapter = new CartItemAdapter(ocdb,orderList, getContext());
+        cartListView.setAdapter(cartItemAdapter);
 
+        cartItemAdapter.setOnItemRemoveListener(this);
         final double[] sum = {0};
         executorService.execute(new Runnable() {
             @Override
@@ -126,9 +157,6 @@ public class CartFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        cartItemAdapter = new CartItemAdapter(orderList);
-                        cartListView.setAdapter(cartItemAdapter);
-
 
 
                         if(orderList!= null){
@@ -146,33 +174,38 @@ public class CartFragment extends Fragment {
                     }
                 });
 
+
+
                 btnMakeOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        Bundle bundle = new Bundle();
-
-                        bundle.putString("email",email);
-                        bundle.putDouble("finalPrice", sum[0]);
+                        Log.d("ORDERLIST", String.valueOf(orderList.size()));
                         ExecutorService executorService = Executors.newSingleThreadExecutor();
+                        Bundle bundle = new Bundle();
+                        TextView price = view.findViewById(R.id.txtViewFinalPrice);
+                        Double result = Double.parseDouble(price.getText().toString().replace("$", ""));
+                        bundle.putString("email",email);
+                        bundle.putDouble("finalPrice", result);
+
                         executorService.execute(new Runnable() {
                             @Override
                             public void run() {
                                 // Save the order history into the database
-                                OrderHistory orderHistory = new OrderHistory(email, new Date(), sum[0]);
+                                OrderHistory orderHistory = new OrderHistory(email, new Date(), result);
                                 ocdb.orderHistoryDao().insertOrderHistory(orderHistory);
 
                                 // Clear the order list for the current user
-                                ocdb.orderDao().deleteOrderHistoryFromEmail(email);
+                                ocdb.orderDao().deleteOrderFromEmail(email);
                             }
                         });
 
                         CheckoutFragment checkoutFragment = new CheckoutFragment();
                         checkoutFragment.setArguments(bundle);
                         getParentFragmentManager().beginTransaction()
-                                .replace(R.id.relativelayout,checkoutFragment)
-                                .addToBackStack(null)
-                                .commit();
+                            .replace(R.id.relativelayout,checkoutFragment)
+                            .addToBackStack(null)
+                            .commit();
+
 
                     }
                 });
@@ -180,6 +213,8 @@ public class CartFragment extends Fragment {
 
             }
         });
+
+
     }
 
 }

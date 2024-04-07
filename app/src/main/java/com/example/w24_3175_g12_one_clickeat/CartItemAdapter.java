@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -68,7 +69,7 @@ public class CartItemAdapter extends BaseAdapter {
 
         TextView txtViewItemPrice = convertView.findViewById(R.id.txtViewItemPrice);
 
-        TextView txtViewItemRemove = convertView.findViewById(R.id.TxtViewCartItemRemove);
+        Button txtViewItemRemove = convertView.findViewById(R.id.removeBtn);
 
         EditText editTxtItemQuantity = convertView.findViewById(R.id.editTextQuantityNum);
 

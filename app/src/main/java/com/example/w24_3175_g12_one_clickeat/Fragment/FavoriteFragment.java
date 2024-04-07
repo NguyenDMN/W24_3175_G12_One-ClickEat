@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,8 @@ import java.util.concurrent.Executors;
  * create an instance of this fragment.
  */
 public class FavoriteFragment extends Fragment {
+
+
     String email;
     OneClickEatDatabase ocdb;
     List<FavShop> favList;
@@ -79,44 +82,79 @@ public class FavoriteFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
             email = getArguments().getString("email");
 
-            ocdb= Room.databaseBuilder(getContext(),OneClickEatDatabase.class, "oneclickeat.db").build();
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
-            executorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    favList = ocdb.favshopDao().getAllFavShops(email);
-
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Set up the adapter and item click listener
-                            favItemAdapter = new FavItemAdapter(favList);
-                            favListView.setAdapter(favItemAdapter);
-                        }
-                    });
-
-                }
-            });
-
         }
 
 
 
 
+
+
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         favListView = view.findViewById(R.id.listViewFav);
-//        favListView.setAdapter(new FavItemAdapter(favList));
 
+        // Move the database initialization and access code inside the ExecutorService
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                ocdb = Room.databaseBuilder(getContext(), OneClickEatDatabase.class, "oneclickeat.db").build();
+                favList = ocdb.favshopDao().getAllFavShops(email);
 
-        return inflater.inflate(R.layout.fragment_favorite, container, false);
+                // Update UI on the main thread
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (favList != null) {
+                            favItemAdapter = new FavItemAdapter(favList);
+                            favListView.setAdapter(favItemAdapter);
 
+                            favListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    if (i != -1) {
+                                        long shopId = favList.get(i).getId();
+
+                                        // Create a bundle to pass data to FoodItemFragment
+                                        Bundle bundle = new Bundle();
+                                        bundle.putLong("shopId", shopId);
+                                        bundle.putString("email", email);
+
+                                        // Create a new instance of FoodItemFragment
+                                        RestaurantFragment resItemFragment = new RestaurantFragment();
+                                        resItemFragment.setArguments(bundle);
+
+                                        // Navigate to FoodItemFragment
+                                        getParentFragmentManager().beginTransaction()
+                                                .replace(R.id.relativelayout, resItemFragment)
+                                                .addToBackStack(null)
+                                                .commit();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
+        return view;
     }
 
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+    }
+
 }
+
+
+
+

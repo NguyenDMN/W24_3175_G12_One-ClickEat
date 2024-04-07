@@ -46,5 +46,6 @@
     <string name="imgViewHeart">Heart Icon</string>
     <string name="txtViewFavTitle">Favorite Shop</string>
     <string name="removeBtn">Remove</string>
+    <string name="Checkout">Successfully Checkout!</string>
 
 </resources>

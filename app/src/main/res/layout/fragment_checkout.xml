@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center"
-            android:text="@string/hello_blank_fragment"
+            android:text="@string/Checkout"
             android:textAlignment="center"
             android:textSize="24sp"
             android:textStyle="bold"

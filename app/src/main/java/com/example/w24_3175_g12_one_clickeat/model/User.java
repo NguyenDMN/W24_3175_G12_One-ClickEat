@@ -1,5 +1,7 @@
 package com.example.w24_3175_g12_one_clickeat.model;
 
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -21,6 +23,19 @@ public class User {
     @NonNull
     @ColumnInfo(name="password")
     private String Password;
+
+
+    @ColumnInfo(name="imageuri")
+    private String imageUri;
+
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
 
     public User() {
 

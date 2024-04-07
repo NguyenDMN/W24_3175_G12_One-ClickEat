@@ -74,6 +74,14 @@ public class RestaurantFragment extends Fragment {
             @Override
             public void run() {
                 favShopList = ocdb.favshopDao().getAllFavShops(email);
+                shopInfor = ocdb.shopDao().getOneShopById(shopId);
+                if (favShopList != null) {
+                    for (FavShop favShop : favShopList) {
+                        Log.d("FAV_SHOP", "Shop ID: " + favShop.getId() + ", Shop Name: " + favShop.getName());
+                    }
+                } else {
+                    Log.d("FAV_SHOP", "favShopList is null");
+                }
             }
         });
 
@@ -88,21 +96,78 @@ public class RestaurantFragment extends Fragment {
         resView = view.findViewById(R.id.ResView);
         imgHeartFav = view.findViewById(R.id.imgViewHeartFav);
 
+        ocdb = Room.databaseBuilder(getContext(), OneClickEatDatabase.class, "oneclickeat.db").build();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                favShopList = ocdb.favshopDao().getAllFavShops(email);
+                shopInfor = ocdb.shopDao().getOneShopById(shopId);
+                boolean isFavorite = false;
+                if (favShopList != null) {
+                    Log.d("ISFAVORITENAME1", String.valueOf(favShopList.size()));
+                    for(int i =0; i<favShopList.size();i++){
+                        Log.d("ISFAVORITENAME2", favShopList.get(i).getName());
+                        if(shopInfor.getName().equals(favShopList.get(i).getName())){
+                            isFavorite = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(isFavorite){
+                    Log.d("ISFAVORITE2", "True");
+                }else{
+                    Log.d("ISFAVORITE2", "False");
+                }
+
+                if (isFavorite) {
+                    imgHeartFav.setImageResource(R.drawable.heart_filled);
+                    imgHeartFav.setTag(R.drawable.heart_filled);
+                } else {
+                    imgHeartFav.setImageResource(R.drawable.heart_unfilled);
+                    imgHeartFav.setTag(R.drawable.heart_unfilled);
+                }
+            }
+        });
 
 
-        if (favShopList != null && favShopList.contains(shopId)) {
-            imgHeartFav.setImageResource(R.drawable.heart_filled);
-            imgHeartFav.setTag(R.drawable.heart_filled);
-        } else {
-            imgHeartFav.setImageResource(R.drawable.heart_unfilled);
-            imgHeartFav.setTag(R.drawable.heart_unfilled);
-        }
+        // Check if the current shop ID is in the favShopList
+//        boolean isFavorite = false;
+//        if (favShopList != null) {
+//            Log.d("ISFAVORITENAME1", String.valueOf(favShopList.size()));
+//            for(int i =0; i<favShopList.size();i++){
+//                Log.d("ISFAVORITENAME2", favShopList.get(i).getName());
+//                if(shopInfor.getName().equals(favShopList.get(i).getName())){
+//                    isFavorite = true;
+//                    break;
+//                }
+//            }
+//        }
+//
+//        if(isFavorite){
+//            Log.d("ISFAVORITE2", "True");
+//        }else{
+//            Log.d("ISFAVORITE2", "False");
+//        }
+//
+//        if (isFavorite) {
+//            imgHeartFav.setImageResource(R.drawable.heart_filled);
+//            imgHeartFav.setTag(R.drawable.heart_filled);
+//        } else {
+//            imgHeartFav.setImageResource(R.drawable.heart_unfilled);
+//            imgHeartFav.setTag(R.drawable.heart_unfilled);
+//        }
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
+
         ocdb = Room.databaseBuilder(getContext(), OneClickEatDatabase.class, "oneclickeat.db").build();
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(new Runnable() {
@@ -175,6 +240,7 @@ public class RestaurantFragment extends Fragment {
                         @Override
                         public void run() {
                             ocdb.favshopDao().insertFavShops(newFavShop);
+                            favShopList = ocdb.favshopDao().getAllFavShops(email);
                         }
                     });
                 } else {
@@ -186,7 +252,8 @@ public class RestaurantFragment extends Fragment {
                     executorService.execute(new Runnable() {
                         @Override
                         public void run() {
-                            ocdb.favshopDao().deleteOneFavShop(shopInfor.getId());
+                            ocdb.favshopDao().deleteOneFavShopByName(shopInfor.getName());
+                            favShopList = ocdb.favshopDao().getAllFavShops(email);
                         }
                     });
                 }

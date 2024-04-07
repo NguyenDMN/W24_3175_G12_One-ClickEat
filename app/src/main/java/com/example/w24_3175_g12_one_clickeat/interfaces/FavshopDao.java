@@ -24,7 +24,12 @@ public interface FavshopDao {
     List<FavShop> getAllFavShops(String email);
 
     @Query("DELETE FROM favshops WHERE id=:shopid")
-    void deleteOneFavShop(long shopid);
+    void deleteOneFavShopById(long shopid);
+
+    @Query("DELETE FROM favshops WHERE name=:shopName")
+    void deleteOneFavShopByName(String shopName);
+
+
 
 
 

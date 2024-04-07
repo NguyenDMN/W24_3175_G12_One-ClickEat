@@ -36,6 +36,8 @@ public class FavoriteFragment extends Fragment {
     List<FavShop> favList;
     ListView favListView;
 
+    FavItemAdapter favItemAdapter;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,6 +86,15 @@ public class FavoriteFragment extends Fragment {
                 public void run() {
                     favList = ocdb.favshopDao().getAllFavShops(email);
 
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Set up the adapter and item click listener
+                            favItemAdapter = new FavItemAdapter(favList);
+                            favListView.setAdapter(favItemAdapter);
+                        }
+                    });
+
                 }
             });
 
@@ -100,7 +111,7 @@ public class FavoriteFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         favListView = view.findViewById(R.id.listViewFav);
-        favListView.setAdapter(new FavItemAdapter(favList));
+//        favListView.setAdapter(new FavItemAdapter(favList));
 
 
         return inflater.inflate(R.layout.fragment_favorite, container, false);

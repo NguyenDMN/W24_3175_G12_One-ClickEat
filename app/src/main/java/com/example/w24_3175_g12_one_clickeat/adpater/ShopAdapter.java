@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.w24_3175_g12_one_clickeat.R;
+import com.example.w24_3175_g12_one_clickeat.model.FavShop;
 import com.example.w24_3175_g12_one_clickeat.model.Shop;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public class ShopAdapter extends BaseAdapter {
     public ShopAdapter(List<Shop> shopList) {
         this.shopList = shopList;
     }
+
 
     @Override
     public int getCount() {

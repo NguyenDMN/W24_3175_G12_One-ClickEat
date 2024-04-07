@@ -33,6 +33,9 @@ public interface OrderDao {
     void updateOrder(long itemId, String userEmail, long newQuantity);
 
     @Query("DELETE from orders where email = :email")
-    void deleteOrderHistoryFromEmail(String email);
+    void deleteOrderFromEmail(String email);
+
+    @Query("DELETE from orders where id = :id")
+    void deleteOrderFromId(long id);
 
 }

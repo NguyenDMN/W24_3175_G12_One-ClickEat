@@ -68,7 +68,7 @@ public class HistoryAdapter extends BaseAdapter {
         TextView orderId = view.findViewById(R.id.history_order_id);
         orderId.setText(orderHistoryList.get(i).getId().toString());
         TextView price = view.findViewById(R.id.history_price);
-        price.setText("$" + finalTotalPriceFormat);
+        price.setText(finalTotalPriceFormat);
         TextView orderDate = view.findViewById(R.id.history_date);
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         orderDate.setText(sdf.format(orderHistoryList.get(i).getCreatedDate()));

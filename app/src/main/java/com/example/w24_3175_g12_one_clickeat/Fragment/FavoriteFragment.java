@@ -3,15 +3,21 @@ package com.example.w24_3175_g12_one_clickeat.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.w24_3175_g12_one_clickeat.R;
+import com.example.w24_3175_g12_one_clickeat.databases.OneClickEatDatabase;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +26,8 @@ import com.example.w24_3175_g12_one_clickeat.R;
  */
 public class FavoriteFragment extends Fragment {
     String email;
+    OneClickEatDatabase ocdb;
+    ListView favListView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +68,12 @@ public class FavoriteFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
             email = getArguments().getString("email");
+
+            ocdb= Room.databaseBuilder(getContext(),OneClickEatDatabase.class, "oneclickeat.db").build();
+            favListView=
         }
+
+
 
 
     }
@@ -70,5 +83,8 @@ public class FavoriteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favorite, container, false);
+
     }
+
+
 }

@@ -1,5 +1,7 @@
 package com.example.w24_3175_g12_one_clickeat.interfaces;
 
+import android.net.Uri;
+
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -29,4 +31,7 @@ public interface UserDao {
     User GetOneUserByEmail(String email);
     @Query("Delete from users where email = :email")
     int deleteOneUserWithEmail(String email);
+
+    @Query("Update users SET imageuri = :imageuri where email = :email ")
+    void updateImageUriByEmail(String imageuri, String email);
 }

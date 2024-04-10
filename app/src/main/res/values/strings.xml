@@ -47,5 +47,6 @@
     <string name="txtViewFavTitle">Favorite Shop</string>
     <string name="removeBtn">Remove</string>
     <string name="Checkout">Successfully Checkout!</string>
+    <string name="my_map_api_key">AIzaSyAx7nx1mLVzazJ41OHari8derhQzZDUU6M</string>
 
 </resources>

@@ -5,12 +5,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -131,33 +134,14 @@ public class RestaurantFragment extends Fragment {
             }
         });
 
+        FragmentManager fragmentManager = getChildFragmentManager(); // Get the child FragmentManager
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction(); // Begin a transaction
+        MapFragment mapFragment = MapFragment.newInstance(String.valueOf(shopId), null); // Pass shopId as argument
+        fragmentTransaction.replace(R.id.mapContainer, mapFragment); // Replace the mapContainer with the MapFragment
+        fragmentTransaction.commit(); // Commit the transaction
 
-        // Check if the current shop ID is in the favShopList
-//        boolean isFavorite = false;
-//        if (favShopList != null) {
-//            Log.d("ISFAVORITENAME1", String.valueOf(favShopList.size()));
-//            for(int i =0; i<favShopList.size();i++){
-//                Log.d("ISFAVORITENAME2", favShopList.get(i).getName());
-//                if(shopInfor.getName().equals(favShopList.get(i).getName())){
-//                    isFavorite = true;
-//                    break;
-//                }
-//            }
-//        }
-//
-//        if(isFavorite){
-//            Log.d("ISFAVORITE2", "True");
-//        }else{
-//            Log.d("ISFAVORITE2", "False");
-//        }
-//
-//        if (isFavorite) {
-//            imgHeartFav.setImageResource(R.drawable.heart_filled);
-//            imgHeartFav.setTag(R.drawable.heart_filled);
-//        } else {
-//            imgHeartFav.setImageResource(R.drawable.heart_unfilled);
-//            imgHeartFav.setTag(R.drawable.heart_unfilled);
-//        }
+
+
         return view;
     }
 

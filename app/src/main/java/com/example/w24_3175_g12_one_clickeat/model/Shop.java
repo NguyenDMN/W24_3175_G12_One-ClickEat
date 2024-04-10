@@ -21,15 +21,35 @@ public class Shop {
     @ColumnInfo(name = "rating")
     private double rating;
 
-    public Shop(@NonNull String name, @NonNull String description, double rating, @NonNull String deliveryTime, int imageResource) {
+    @NonNull
+    @ColumnInfo(name = "deliverytime")
+    private String deliveryTime;
+
+    @NonNull
+    @ColumnInfo(name = "imageresource")
+    private int imageResource;
+
+    @NonNull
+    @ColumnInfo(name="latitude")
+    private double latitude;
+
+    @NonNull
+    @ColumnInfo(name="longtitude")
+    private double longtitude;
+
+
+    public Shop( @NonNull String name, @NonNull String description, double rating, @NonNull String deliveryTime, int imageResource, double latitude, double longtitude) {
         this.name = name;
         this.description = description;
         this.rating = rating;
         this.deliveryTime = deliveryTime;
         this.imageResource = imageResource;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
     }
 
     public Shop() {}
+
 
 
     @NonNull
@@ -84,11 +104,20 @@ public class Shop {
         this.imageResource = imageResource;
     }
 
-    @NonNull
-    @ColumnInfo(name = "deliverytime")
-    private String deliveryTime;
 
-    @NonNull
-    @ColumnInfo(name = "imageresource")
-    private int imageResource;
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongtitude() {
+        return longtitude;
+    }
+
+    public void setLongtitude(double longtitude) {
+        this.longtitude = longtitude;
+    }
 }

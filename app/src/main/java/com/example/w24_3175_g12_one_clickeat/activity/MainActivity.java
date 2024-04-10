@@ -103,13 +103,13 @@ public class MainActivity extends AppCompatActivity {
     public void insertShops() {
         Log.d("INSERTSHOPS" , "insert shops");
         shopList = new ArrayList<>();
-        Shop jolibee = new Shop("jolibee", "jolibee shop", 4.3, "30min", R.drawable.jolibee);
+        Shop jolibee = new Shop("jolibee", "jolibee shop", 4.3, "30min", R.drawable.jolibee,49.281109,-123.120598);
 
         shopList.add(jolibee);
-        shopList.add(new Shop("mcdonald", "mcdonald shop", 4.5, "10min", R.drawable.mcdonald));
-        shopList.add(new Shop("Subway", "Subway shop", 3.8, "20min", R.drawable.subway));
-        shopList.add(new Shop("Wendys", "Wendys shop", 4.3, "50min", R.drawable.wendys));
-        shopList.add(new Shop("Poke", "poke shop", 4, "40min", R.drawable.poke));
+        shopList.add(new Shop("mcdonald", "mcdonald shop", 4.5, "10min", R.drawable.mcdonald,49.260420,-123.006480));
+        shopList.add(new Shop("Subway", "Subway shop", 3.8, "20min", R.drawable.subway,49.276684,-123.099052));
+        shopList.add(new Shop("Wendys", "Wendys shop", 4.3, "50min", R.drawable.wendys,49.215090,-122.922420));
+        shopList.add(new Shop("Poke", "poke shop", 4, "40min", R.drawable.poke,49.183651,-123.094986));
 
     }
 

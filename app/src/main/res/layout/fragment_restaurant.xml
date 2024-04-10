@@ -27,7 +27,7 @@
         <ListView
             android:id="@+id/ResView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="400sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtViewResName" />
@@ -41,6 +41,14 @@
             app:layout_constraintStart_toEndOf="@+id/txtViewResName"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/heart_unfilled" />
+
+        <FrameLayout
+            android:id="@+id/mapContainer"
+            android:layout_width="match_parent"
+            android:layout_height="150sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ResView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
